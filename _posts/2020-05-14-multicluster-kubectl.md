@@ -1,5 +1,8 @@
-2020-05-14
-멀티 클러스터 관리 - (kubeconfig 설정)
+---
+title: "멀티 클러스터 관리 - (kubeconfig 설정)"
+date: 2020-05-14 08:26:28 -0400
+categories: Kubernetes
+---
 멀티 클러스터가 구성되어있는 경우, kubeconfig 설정을 통해서 kubectl이 멀티클러스터를 관리할 수 있도록 할 수 있다.
 
 kubeconfig는 마스터 노드에 있다.
