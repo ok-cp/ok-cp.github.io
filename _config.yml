@@ -10,17 +10,17 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 
 # Site Settings
 locale                   : "euc-KR"
-title                    : "Ok-Computer"
+title                    : "OK-Computer"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "ok-cp"
-description              : "An amazing website."
+description              : "Software Engineer"
 url                      : "https://ok-cp.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "ok-cp/ok-cp.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : "/assets/images/apple-touch-icon.png" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : "Custom Title" # overrides the website title displayed in the masthead, use " " for no title
+masthead_title           : "OK-Computer" # overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
@@ -82,23 +82,23 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "OK-CP"
   avatar           : "/assets/images/bio-photo.jpg"
   bio              : "I am an **amazing** person."
-  location         : "Somewhere"
-  links:
-    - label: "Your Website"
-      icon: "fas fa-fw fa-link"
-      url: "https://your-site.com"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+  location         : "Seoul"
+  # links:
+  #   - label: "Your Website"
+  #     icon: "fas fa-fw fa-link"
+  #     url: "https://your-site.com"
+  #   - label: "Twitter"
+  #     icon: "fab fa-fw fa-twitter-square"
+  #     url: "https://twitter.com/"
+  #   - label: "GitHub"
+  #     icon: "fab fa-fw fa-github"
+  #     url: "https://github.com/"
+  #   - label: "Instagram"
+  #     icon: "fab fa-fw fa-instagram"
+  #     url: "https://instagram.com/"
 
 
 # Site Footer
