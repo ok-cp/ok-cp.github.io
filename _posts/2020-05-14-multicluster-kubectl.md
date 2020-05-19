@@ -9,12 +9,14 @@ kubeconfig는 마스터 노드에 있다.
 master $ ls /root/.kube/config
 /root/.kube/config
 
-클러스터 추가는 다음과 같이 한다.
+### 클러스터 추가는 다음과 같이 한다.
 kubectl config set-cluster development --server=https://1.2.3.4 --certificate-authority=/etc/kubernetes/pki/ca.crt
 kubectl config set-credentials development --client-certificate=/etc/kubernetes/pki/users/dev-user/developer-user.crt --client-key=/etc/kubernetes/pki/users/test-user/test-user.key
 kubectl config set-context development --cluster=development --namespace=storage --user=dev-user
 
+
 kubectl config view 명령어를 통해 config 를 조회할 수 있다.
+```yaml
 apiVersion: v1
 clusters:
 - cluster:
@@ -66,7 +68,7 @@ users:
   user:
     client-certificate: /etc/kubernetes/pki/users/test-user/test-user.crt
     client-key: /etc/kubernetes/pki/users/test-user/test-user.key
-
+```
 
 만약 test-cluster-1 클러스터를 사용하고 싶다면 다음과 같이 명령어를 입력한다.
 kubectl config --kubeconfig=/root/my-kube-config use-context research
