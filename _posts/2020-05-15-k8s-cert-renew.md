@@ -1,6 +1,6 @@
 ---
 title: "kubernetes 인증서"
-date: 2020-05-15 08:26:28 -0400
+date: 2020-05-15 08:26:28 +0900
 categories: Kubernetes
 ---
 ## kubernetes 인증서

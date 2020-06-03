@@ -1,6 +1,6 @@
 ---
 title: "Coredns 최적화"
-date: 2020-06-02 08:26:28 -0400
+date: 2020-06-02 08:26:28 +0900
 categories: Kubernetes
 tags:
   - kubernetes 
