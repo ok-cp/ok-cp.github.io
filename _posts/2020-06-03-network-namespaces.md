@@ -1,7 +1,8 @@
 ---
 title: "Namespace Networking"
-date: 2020-06-02 18:26:28 +0900
+date: 2020-06-03 18:26:28 +0900
 categories: Kubernetes
+classes: wide
 tags:
   - Container
   - network

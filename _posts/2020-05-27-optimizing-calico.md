@@ -2,6 +2,7 @@
 title: "Calico 최적화"
 date: 2020-05-27 08:26:28 +0900
 categories: Kubernetes
+classes: wide
 tags:
   - kubernetes 
   - cni

@@ -2,6 +2,7 @@
 title: "Telegraf & Chronograf 을 이용한 influxdb 모니터링 대시보드"
 date: 2020-05-19 08:26:28 +0900
 categories: Influxdb
+classes: wide
 tags:
   - influxdb
   - telegraf

@@ -2,6 +2,7 @@
 title: "Nginx ingress controller에서 'upstream sent too big header error' 처리"
 date: 2020-05-25 08:26:28 +0900
 categories: Kubernetes
+classes: wide
 tags:
   - kubernetes 
   - nginx ingress

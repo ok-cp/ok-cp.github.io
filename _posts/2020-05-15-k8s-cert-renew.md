@@ -2,6 +2,7 @@
 title: "kubernetes 인증서"
 date: 2020-05-15 08:26:28 +0900
 categories: Kubernetes
+classes: wide
 ---
 ## kubernetes 인증서
 ### v1.14.x 
