@@ -22,7 +22,7 @@ Namespace를 사용하여 호스트에 격리된 공간을 만듭니다.
 
 컨테이너 내부에서 프로세스를 나열 할 때 프로세스 ID가 1 인 단일 프로세스가 표시됩니다. 
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9cf7a362-d935-445f-bf36-83749e6205ab/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9cf7a362-d935-445f-bf36-83749e6205ab/Untitled.png)
+![assets/images/ns1.png]
 
 호스트의 루트 사용자와 동일한 프로세스를 나열하면, 컨테이너 내에서 실행중인 프로세스와 함께 다른 모든 프로세스가 표시됩니다.
 
