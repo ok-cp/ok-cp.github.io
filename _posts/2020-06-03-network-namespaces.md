@@ -38,7 +38,7 @@ Namespace를 사용하여 호스트에 격리된 공간을 만듭니다.
 
 Namespace 안에서 컨테이너는 자체 가상 인터페이스 라우팅 및 ARP 테이블을 가지게 됩니다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7a70c630-ed35-400a-84db-597d93082ca0/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7a70c630-ed35-400a-84db-597d93082ca0/Untitled.png)
+![ns2]({{ site.url }}{{ site.baseurl }}/assets/images/ns2.png)
 
 호스트에서 새로운 Network Namespace 작성은 ip nets add 명령을 통해 실행 가능합니다.
 
@@ -46,7 +46,7 @@ Namespace 안에서 컨테이너는 자체 가상 인터페이스 라우팅 및 
 
 이 경우 Network Namespace를 나열하기 위해 두 개의 Network Namespace를 작성하고 ip netns 명령을 실행하여 namespace를 나열하였습니다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cc1cecbf-ac5d-425c-ad94-11ed40874c00/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cc1cecbf-ac5d-425c-ad94-11ed40874c00/Untitled.png)
+![ns3]({{ site.url }}{{ site.baseurl }}/assets/images/ns3.png)
 
 호스트에서 ip link 명령을 실행하여 루프백 인터페이스와 eth0 인터페이스를 다시 살펴보겠습니다.
 
