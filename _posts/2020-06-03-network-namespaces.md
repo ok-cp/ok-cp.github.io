@@ -52,7 +52,7 @@ Namespace 안에서 컨테이너는 자체 가상 인터페이스 라우팅 및 
 
 방금 만든 Network Namespace 정보와 비교해보겠습니다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0d58ab03-3b09-47b3-be24-46e88150cdbb/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0d58ab03-3b09-47b3-be24-46e88150cdbb/Untitled.png)
+![ns4]({{ site.url }}{{ site.baseurl }}/assets/images/ns4.png)
 
 Namespace 정보는 다음명령어로 조회가능합니다.
 
@@ -65,9 +65,6 @@ red, blue 둘 다 루프백 인터페이스만 나열됩니다.
 호스트의 eth0 인터페이스를 볼 수 없습니다.
 
 따라서 Namespace는 컨테이너가 호스트 인터페이스를 볼 수 없습니다. ARP 테이블에서도 마찬가지입니다.
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8c70d7d7-4199-413b-9745-b0a0c5bc3027/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8c70d7d7-4199-413b-9745-b0a0c5bc3027/Untitled.png)
-
 호스트에서 ARP 명령을 실행하면 항목 목록이 표시됩니다. 그러나 컨테이너 내부에서 실행하면.
 라우팅 테이블에 대한 항목이없고 동일합니다.
 
@@ -81,7 +78,7 @@ $ route
 $ ip nets exec red route
 ```
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0becce05-0cde-4684-bdd5-2b91322a3dd5/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0becce05-0cde-4684-bdd5-2b91322a3dd5/Untitled.png)
+![ns5]({{ site.url }}{{ site.baseurl }}/assets/images/ns5.png)
 
 현재 만든 Network Namespace 에는 네트워크 연결할 수 없습니다. 자체 인터페이스가 없으며 기본 호스트 네트워크를 볼 수도 없습니다.
 
