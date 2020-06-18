@@ -1,5 +1,5 @@
 ---
-title: "Kubernetes timezonne 동기화"
+title: "Kubernetes timezone 동기화"
 date: 2020-06-13 18:26:28 +0900
 categories: Kubernetes
 classes: wide
