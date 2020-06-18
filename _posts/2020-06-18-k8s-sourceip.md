@@ -53,12 +53,13 @@ node1은 패킷을 올바른 source IP로 엔드 포인트로 라우팅합니다
 ``` 
 
 ## Weave-net 이슈
-weave에서 service.spec.externalTrafficPolicy 의 Local 을 지원하지 못하는 문제 발생함. weave env에 NO_MASQ_LOCAL  값을 “1”로 설정하면 사용할 수 있다. 기본값은 아님.
+weave에서 service.spec.externalTrafficPolicy 의 Local 을 지원하지 못하는 문제 발생합니다. weave env에 NO_MASQ_LOCAL  값을 “1”로 설정하면 사용할 수 있습니다. 기본값은 0
 
-https://github.com/weaveworks/weave/issues/2924#issuecomment-407827430
+`link: https://github.com/weaveworks/weave/issues/2924#issuecomment-407827430`
 
 ## ExternalIP 이슈
-service.spec.externalIP를 지정하는 경우, NodePort를 사용하지 않고 ServicePort를 사용하면 SourceIP를 찾아올 수 없다. 이유는 externalIP 의 service port를 사용하게 되면 Service externalIP를 바라본다. SourceIP은 꼭 NodePort를 사용해야 Ingress Traffic이 도착한다.
+service.spec.externalIP를 지정하는 경우, NodePort를 사용하지 않고 ServicePort를 사용하면 SourceIP를 찾아올 수 없습니다. 이유는 externalIP 의 service port를 사용하게 되면 Service externalIP를 바라보며 SourceIP은 꼭 NodePort를 사용해야 Ingress Traffic이 도착합니다.
 
 ## 참고
-https://kubernetes.io/docs/tutorials/services/source-ip/
+
+`link: https://kubernetes.io/docs/tutorials/services/source-ip/`
