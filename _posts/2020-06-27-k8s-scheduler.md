@@ -7,14 +7,14 @@ tags:
   - Kubernetes
 
 ---
-## Kubernetes Scheduler
-In a matter of seconds, the Pod is up and running on one of the cluster nodes. However, a lot has happened within those seconds. Let’s see:
+## Kubernetes Scheduler 
 
-While scanning the API server (which it is continuously doing), the Kubernetes Scheduler detects that there is a new Pod without a nodeName parameter. The nodeName is what shows which node should be owning this Pod.
-The Scheduler selects a suitable node for this Pod and updates the Pod definition with the node name (though the nodeName parameter).
-The kubelet on the chosen node is notified that there is a pod that is pending execution.
-The kubelet executes the Pod, and the latter starts running on the node.
-How Kubernetes Selects The Right node?
+1. Kubernetes Scheduler는 Nodename 매개 변수없는 새로운 Pod가 있음을 감지합니다. 
+2. Scheduler는 Pod에 적합한 노드를 선택하고 노드 이름에 Pod를 업데이트합니다.
+3. 선택된 노드의 kubelet 에 Pending Pod가 있음을 알립니다.
+4. kubelet은 Pod를 실행하고 노드에서 실행합니다.
+
+## Kubernetes 가 올바른 노드를 찾는 방법
 Perhaps the hardest part of the above steps is when the Scheduler decides which node it should select for running the pod. Indeed, this part takes the most work as there are several algorithms that the Scheduler must use to make this decision. Some of those algorithms depend on user-supplied options, while Kubernetes itself calculates others. They can be explained like a set of questions that the Scheduler asks the node to decide it.
 
 Magalix trial
