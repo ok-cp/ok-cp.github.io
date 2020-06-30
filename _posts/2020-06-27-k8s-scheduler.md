@@ -15,7 +15,14 @@ tags:
 4. kubelet은 Pod를 실행하고 노드에서 실행합니다.
 
 ## Kubernetes 가 올바른 노드를 찾는 방법
-Perhaps the hardest part of the above steps is when the Scheduler decides which node it should select for running the pod. Indeed, this part takes the most work as there are several algorithms that the Scheduler must use to make this decision. Some of those algorithms depend on user-supplied options, while Kubernetes itself calculates others. They can be explained like a set of questions that the Scheduler asks the node to decide it.
+Scheduler는 결정을 하기 위해 사용하는 알고리즘이 있습니다. 
+
+### Pod를 실행하기 위해서는 조건이 있습니다.
+만약 높은 CPU, Memory 사용량의 Pod가 있다면 노드에 과부하가 걸릴 수 있습니다. 
+Scheduler는 배치할 포드가 있으면 노드에 필요한 자원이 있는지 여부를 판별하게 됩니다.
+Pod가 요청한 Memory가 충분하지 않은 노드에 Pod가 배포된 경우 호스팅된 응용 프로그램이 예기치 않게 작동하거나 심지어 충돌 할 수 있습니다.
+대부분 Kubernetes의 결정이 올바를 수 있지만 때때로 사용자는 Kubernetes를 대신 결정을 내려야합니다. 
+
 
 Magalix trial
 Do You Have What it Takes To Run This Pod (Predicate)?
