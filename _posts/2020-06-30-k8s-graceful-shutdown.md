@@ -33,9 +33,9 @@ lifecycle:
       preStop : 
         exec : 
           command : 
-          -/usr/sbin/nginx 
-          --s 
-          -quit
+          - /usr/sbin/nginx 
+          - -s 
+          - quit
 ```
 
 #### Nginx Container log
