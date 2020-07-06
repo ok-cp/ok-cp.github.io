@@ -56,7 +56,7 @@ spec:
           - command:
             - /bin/sh
             - -c
-            - kubectl get po -n demo
+            - kubectl scale deploy nginx -n demo --replicas=3
             image: okcp/kubectl:latest
             imagePullPolicy: Always
             name: scaleup
