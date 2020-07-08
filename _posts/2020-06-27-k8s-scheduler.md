@@ -7,72 +7,41 @@ tags:
   - Kubernetes
 
 ---
-## Kubernetes Scheduler 
+## Kubernetes Pod가 적절한 노드를 찾는 방법
+Scheduler는 결정을 하기 위해 사용하는 알고리즘이 있습니다. 
 
 1. Kubernetes Scheduler는 Nodename 매개 변수없는 새로운 Pod가 있음을 감지합니다. 
 2. Scheduler는 Pod에 적합한 노드를 선택하고 노드 이름에 Pod를 업데이트합니다.
 3. 선택된 노드의 kubelet 에 Pending Pod가 있음을 알립니다.
 4. kubelet은 Pod를 실행하고 노드에서 실행합니다.
 
-## Kubernetes 가 올바른 노드를 찾는 방법
-Scheduler는 결정을 하기 위해 사용하는 알고리즘이 있습니다. 
-
-### Pod를 실행하기 위해서는 조건이 있습니다.
+### Pod를 실행하기 위해서는 조건(우선순위)이 있습니다.
 만약 높은 CPU, Memory 사용량의 Pod가 있다면 노드에 과부하가 걸릴 수 있습니다. 
 Scheduler는 배치할 포드가 있으면 노드에 필요한 자원이 있는지 여부를 판별하게 됩니다.
 Pod가 요청한 Memory가 충분하지 않은 노드에 Pod가 배포된 경우 호스팅된 응용 프로그램이 예기치 않게 작동하거나 심지어 충돌 할 수 있습니다.
-대부분 Kubernetes의 결정이 올바를 수 있지만 때때로 사용자는 Kubernetes를 대신 결정을 내려야합니다. 
+
+만약, Pod를 배포할 노드를 선택하기 전에 Kubernetes Scheduler가 고려해야 할 요소가 너무 많을 경우에는 먼저 정상 상태의 모든 노드를 선택합니다.
+그리고 predicate 테스트를 실행하여 적합하지 않은 노드를 필터링합니다. 그 다음 우선 순위 테스트를 실행합니다. 가장 높은 점수를 받은 노드를 선택하게 됩니다.
+때때로 같은 점수를 가진 노드가 두 개 이상이면 Scheduler는 라운드 로빈 방식으로 노드를 선택하여 균등하게 분배합니다.
 
 
-Magalix trial
-Do You Have What it Takes To Run This Pod (Predicate)?
-A node may be overloaded with so many busy pods consuming most of its CPU and memory. So, when the scheduler has a Pod to deploy, it determines whether or not the node has the necessary resources. If a Pod was deployed to a node that does not have enough memory (for example) that the Pod is requesting, the hosted application might behave unexpectedly or even crash.
+### NodeSelector
+Scheduler의 결정보다 사용자 의사 결정이 필요한 경우에는  .spec.nodeSelector 이 필요합니다.
+nodeSelector는 특정 레이블이 하나 이상있는 노드를 선택합니다. 
 
-Sometimes, the user needs to make this decision on behalf of Kubernetes. Let’s say that you’ve recently purchased a couple of machines equipped with SSD disks, and you want to use them explicitly for the MongoDB part of the application. To do this, you select the nodes through the node labels in the pod definition. When a node does not match the provided label, it is not chosen for deploying the Pod.
-
-Scheduler
-As demonstrated in the above graph, the predicate decision resolves to either True (yes, deploy the pod on that node) or False (no, don’t deploy on that one).
-
-Are You a Better Candidate For Having This Pod (Priorities)?
-In addition to true/false decisions a.k.a predicates, the scheduler executes some calculations (or functions) to determine which node is more suited to be hosting the pod in question.
-
-For example, a node where the pod image is already present (like it’s been pulled before in a previous deployment) has a better chance of having the pod scheduled to it because no time will be wasted downloading the image again.
-
-Another example is when the scheduler favors a node that does not include other pods of the same Service. This algorithm helps spread the Service pods on multiple nodes as much as possible so that one node failure does not cause the entire Service to go down. Such a decision-making method is called the spreading function.
-
-Several decisions, like the above examples, are grouped, and weight is calculated for each node based on the final decision. The node with the highest priority wins the pod deployment.
-
-The Final Decision
-You may be asking, if there are so many factors that the Kubernetes Scheduler must consider before selecting a node for deploying the pod, how does it get to choose the right one?
-
-Well, the decision process is done as follows:
-The scheduler determines all the nodes that it knows they exist and are healthy.
-The scheduler runs the predicate tests to filter out nodes that are not suitable. The rest of the nodes form a group of possible nodes.
-The scheduler runs priority tests against the possible nodes. Candidates are ordered by their score with the highest ones on the top. At this point, the highest-scoring possible node gets chosen. But sometimes there may be more than one node with the same score.
-If nodes have the same score, they are moved to the final list. The Kubernetes Scheduler selects the winning node in a round-robin fashion to ensure that it equally spreads the load among the machines.
-What if That Was Not The Best Decision?
-In busy Kubernetes Clusters, the time between the Scheduler choosing the right node and the kubelet on that node executing the pod may be sufficient for changes to occur on the nodes. Even if that time is no more than a few milliseconds, a pod may get terminated on one of the nodes that were filtered out due to insufficient memory. That node could’ve had a higher score on the priority test only if it wasn’t overloaded back then. But now, perhaps a less-suitable node was selected for the pod.
-
-Some projects aim at addressing this situation like the Kubernetes Descheduler Project. In this application, the pod is automatically evicted from the node if another node proved to be a better choice for pod-scheduling. The pod is returned to the schedule to deploy it again to the right node.
-
-Perhaps a more difficult situation could occur when the opposite scenario happens. Let’s say that a node was tested against whether or not it could provide 2 GB of memory. At the time the Scheduler was doing the predicate check, the node did have some spare RAM. However, while kubelet is executing the pod against the node, a DaemonSet was deployed to the same node. This DaemonSet entailed some resource-heavy operation that consumed the remaining 2 GB. Now, when the pod tries to run, and since it is missing the amount of memory it requires to function correctly, it fails. If this pod was deployed using just a pod definition, then the application that it runs on would fail to start, and Kubernetes could do nothing about it. However, if this pod was part of a pod controller like a Deployment or a ReplicaSet, then once it fails, the controller will detect that there is a smaller number of replicas than it should be handling. Accordingly, the controller will request another pod to be scheduled. The Scheduler will run all the checks again and schedules the pod to a different node. This is one of the reasons why it is always advised to use a higher-level object like Deployments when creating pods.
-
-User-Defined Decision-Making
-Earlier in this article, we mentioned that a user could simply choose to run a pod on a specific node using the .spec.nodeSelector parameter in the Pod definition or template. The
-
-nodeSelector selects nodes that have specific one or more labels. However, sometimes, user
-
-requirements get more complicated. A nodeSelector, for example, selects nodes that have all the labels defined in the parameter. What if you want to make a more flexible selection?
-
-### Node Affinity
-Let’s consider our earlier example when we wanted to schedule our pod to run on the machines with the SSD disks. Let’s say that we want them also to use the eight-cored hosts. Node affinity allows for flexible decisions like this. The following pod template chooses nodes that have labels of feature=ssd or feature=eight-cores:
-
+### NodeAffinity
+nodeSelector는 단순하게 노드를 결정이 필요한 경우에는 유용하지만 다양한 선택 조건을 가질 수 없습니다. 
+NodeAffinity는 이러한 다양한 조건을 충족하여 배포할 수 있습니다.
+다음과 예제와 같이 feature = ssd Labels을 가진 노드에 배포할 수 있게 합니다.
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
- name: mongo
+ name: nginx
 spec:
+ containers:
+ - name: nginx
+   image: nginx
  affinity:
    nodeAffinity:
      requiredDuringSchedulingIgnoredDuringExecution:
@@ -82,20 +51,19 @@ spec:
            operator: In
            values:
            - ssd
-           - eight-cores
- containers:
- - name: mongodb
-   image: mogo
+
 ```
 
-The RequiredDuringSchedulingIgnoredDuringExecution Option
-There’s a new option here: requiredDuringSchedulingIgnoredDuringExecution. It’s is easier than it looks. It means that we need to run those pods only on nodes labeled feature=ssd or feature=eight-cores. We don’t want the scheduler to make decisions outside of this set of nodes. This is the same behavior as the nodeSelector but with a more expressive syntax.
+#### RequiredDuringSchedulingIgnoredDuringExecution 옵션
+matchExpressions labels 노드에서만 Pod를 실행합니다. nodeSelector와 동일한 동작입니다.
 
-The PreferredDuringSchedulingIgnoredDuringExecution Option
-Let’s say that we’re interested in running the pod on our selected nodes. But, since launching the pod is of an absolute priority, we demand to run it even if the selected nodes are not available. In this case, we can use the preferredDuringSchedulingIgnoredDuringExecution option. This option will try to run the pod on the nodes specified by the selector. But if those nodes are not available (failed the tests), the Scheduler will try to run the pod on the next best node.
+#### PreferredDuringSchedulingIgnoredDuringExecution 옵션
+matchExpressions labels이 지정된 노드에서 Pod를 실행하려고 시도합니다. 
+그러나 해당 노드를 사용할 수없는 경우 다음 최상의 노드에서 Pod를 실행하려고 시도합니다.
 
-The Node Anti-Affinity
-Some scenarios require that you don’t use one or more nodes except for particular pods. Think of the nodes that host your monitoring application. Those nodes shouldn’t have many resources due to the nature of their role. Thus, if other pods than those which have the monitoring app are scheduled to those nodes, they hurt monitoring and also degrades the application they are hosting. In such a case, you need to use node anti-affinity to keep pods away from a set of nodes. The following is the previous pod definition with anti-affinity added:
+
+### Node Anti-Affinity
+간혹 특정 Pod를 제외하고 하나 이상의 노드를 사용하지 않아야합니다. 모니터링 애플리케이션을 호스팅하는 노드를 생각해보십시오. 이러한 노드에는 역할 특성으로 인해 많은 리소스가 없어야합니다. 따라서 모니터링 앱이있는 포드 이외의 포드가 해당 노드에 예약 된 경우 모니터링이 손상되고 호스팅중인 애플리케이션이 저하됩니다. 이 경우 포드를 노드 세트에서 멀리 유지하려면 노드 반 선호도를 사용해야합니다. 다음은 반 선호도가 추가 된 이전 포드 정의입니다.
 
 ```yaml
 apiVersion: v1

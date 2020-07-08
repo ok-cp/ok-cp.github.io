@@ -21,7 +21,7 @@ Container에서 kubectl을 사용하기 위해서는 사전에 kubectl CLI를 Do
 
   * kubectl 설치 방법(https://kubernetes.io/ko/docs/tasks/tools/install-kubectl/)
 
-그리고 kubectl를 사용하기 위한 service account가 필요합니다.
+그리고 kubectl를 사용하기 위한 kubeadm config가 필요합니다.
 
 ### Dockerfile
 ```bash
@@ -60,16 +60,18 @@ spec:
             image: okcp/kubectl:latest
             imagePullPolicy: Always
             name: scaleup
-            env:
-            - name: "SERVICE_ACCOUNT_KEY"
-              valueFrom:
-                secretKeyRef:
-                  key: "SERVICE_ACCOUNT_KEY"
-                  name: "scale-job-secret"
+            volumeMounts:
+              - mountPath: /root/.kube
+                name: kube-config            
           dnsPolicy: ClusterFirst
           restartPolicy: OnFailure
           schedulerName: default-scheduler
-  schedule: 30 * * * *
+          volumes:
+            - name: kube-config
+              secret:
+                defaultMode: 420
+                secretName: kube-config          
+  schedule: 30 14 * * *
 
 ```
 이렇게 하면 Timebased 의 Scaleup뿐만 아니라 ScaleDown도 가능합니다.
