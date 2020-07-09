@@ -29,6 +29,22 @@ Pod가 요청한 Memory가 충분하지 않은 노드에 Pod가 배포된 경우
 Scheduler의 결정보다 사용자 의사 결정이 필요한 경우에는  .spec.nodeSelector 이 필요합니다.
 nodeSelector는 특정 레이블이 하나 이상있는 노드를 선택합니다. 
 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+  nodeSelector:
+    disktype: ssd
+```
+
 ### NodeAffinity
 nodeSelector는 단순하게 노드를 결정이 필요한 경우에는 유용하지만 다양한 선택 조건을 가질 수 없습니다. 
 NodeAffinity는 이러한 다양한 조건을 충족하여 배포할 수 있습니다.
