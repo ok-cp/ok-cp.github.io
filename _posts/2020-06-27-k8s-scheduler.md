@@ -63,14 +63,19 @@ matchExpressions labels이 지정된 노드에서 Pod를 실행하려고 시도�
 
 
 ### Node Anti-Affinity
-간혹 특정 Pod를 제외하고 하나 이상의 노드를 사용하지 않아야합니다. 모니터링 애플리케이션을 호스팅하는 노드를 생각해보십시오. 이러한 노드에는 역할 특성으로 인해 많은 리소스가 없어야합니다. 따라서 모니터링 앱이있는 포드 이외의 포드가 해당 노드에 예약 된 경우 모니터링이 손상되고 호스팅중인 애플리케이션이 저하됩니다. 이 경우 포드를 노드 세트에서 멀리 유지하려면 노드 반 선호도를 사용해야합니다. 다음은 반 선호도가 추가 된 이전 포드 정의입니다.
+반대로 특정 노드를 피해서 Pod를 배포하는 경우도 있습니다.
+예를 들어 모니터링 애플리케이션은 많은 리소스를 사용하기 때문에 모니터링 앱과 서비스앱이 같은 노드에 있을 경우, 리소스 경쟁이 발생하며 pod가 정상적으로 실행하지 못할 수 있습니다.
+operator: NotIn 을 사용하여 role=monitoring 을 가진 노드를 제외하고 Pod를 배포할 수 있습니다.
 
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
- name: mongo
+ name: nginx
 spec:
+ containers:
+ - name: nginx
+   image: nginx
  affinity:
    nodeAffinity:
      requiredDuringSchedulingIgnoredDuringExecution:
@@ -80,27 +85,22 @@ spec:
            operator: In
            values:
            - ssd
-           - eight-cores
          - key: role
            operator: NotIn
            values:
            - monitoring
-
- containers:
- - name: mongodb
-   image: mogo
 ```
 
+###  Nodes Taints And Tolerations
+Node Anti-Affinity 패턴을 사용하면 특정 노드에서 Pod가 실행되는 것을 방지할 수 있지만 실행하는 Pod마다 명시적으로 선언해야합니다. 
+Tolerations은 비슷하지만 노드에 taint 실행을 하여 처음부터 다른 Pod가 실행되는 것을 방지합니다. 그리고 tolerations 을 명시한 Pod만 스케쥴합니다.
 
-Adding another key to the matchExpressions with the operator NotIn will avoid scheduling the mongo pods on any node labelled role=monitoring.
+먼저 노드에 taint를 실행합니다.
+```bash
+$ kubectl taint nodes infra-node1 role=monitoring:NoSchedule
+```
 
-Nodes Taints And Tolerations
-While nodes anti-affinity patterns allow you to prevent pods from running on specific nodes, they suffer from a drawback: the pod definition must explicitly declare that it shouldn’t run on those nodes. So, what if a new member joins the development team, writes a Deployment for her application, but forgets to exclude the monitoring nodes from the target nodes? Kubernetes administrators need a way to repel pods from nodes without having to modify every pod definition. That’s the role of taints and tolerations.
-
-When you taint a node, it is automatically excluded from pod scheduling. When the schedule runs the predicate tests on a tainted node, they’ll fail unless the pod has toleration for that node. For example, let’s taint the monitoring node, mon01:
-
-kubectl taint nodes mon01 role=monitoring:NoSchedule
-Now, for a pod to run on this node, it must have a toleration for it. For example, the following .spec.toleration:
+pod애 spec.tolerations 를 명시하면 role=monitoring taint를 가진 노드에 Pod가 실행되게 됩니댜.
 
 ```yaml
 tolerations:
@@ -110,16 +110,16 @@ tolerations:
   effect: "NoSchedule"
 ```
 
-matches the key, value, and effect of the taint on mon01. This means that mon01 will pass the predicate test when the Scheduler decides whether or not it can use it for deploying this pod.
+하지만 꼭 infra-node에 먼저 Pod가 배치되는 것은 아니며 우선순위가 높을 뿐입니다. 꼭 infra-node에 Pod를 실행해야한다면 NodeSelector나 nodeAffinity를 선택하여 명시해야합니다.
 
-An important thing to notice, though, is that tolerations may enable a tainted node to accept a pod but it does not guarantee that this pod runs on that specific node. In other words, the tainted node mon01 will be considered as one of the candidates for running our pod. However, if another node has a higher priority score, it will be chosen instead. For situations like this, you need to combine the toleration with nodeSelector or node affinity parameters.
+## Conclusion
+Kubernetes Scheduler는 Pod 실행에 가장 적합한 노드를 결정하는 구성 요소입니다.
 
-TL;DR
-The Kubernetes Scheduler is the component in charge of determining which node is most suitable for running pods.
-It does that using two main decision-making processes:
-Predicates: which are a set of tests, each of them qualifies to true or false. A node that fails the predicate is excluded from the process.
-Priorities: where each node is tested against some functions that give it a score. The node with the highest score is chosen for pod deployment.
-The Kubernetes Scheduler also honors user-defined factors that affect its decision:
-Node Selector: the .spec.nodeSelector parameter in the pod definition narrows down node selection to those having the labels defined in the nodeSelector.
-Node affinity and anti-affinity: those are used for greater flexibility in node selection as they allow for more expressive selection criteria. Node affinity can be used to guarantee that only the matching nodes are used or only to set a preference.
-Taints and tolerations work in the same manner as node affinity. However, their default action is to repel pods from the tainted nodes unless the pods have the necessary tolerations (which are just a key, a value, and an effect). Tolerations are often combined with node affinity or node selector parameters to guarantee that only the matched nodes are used for pod scheduling.
+의사 결정 프로세스는 두 가지 조건이 있습니다.
+  * Predicates : 테스트 세트이며, 각각의 테스트는 true 또는 false입니다. Predicates에 실패한 노드는 프로세스에서 제외됩니다.
+  * Priorities(우선 순위) : 각 노드는 점수를주는 일부 기능에 대해 테스트됩니다. 포드 배포에는 점수가 가장 높은 노드가 선택됩니다.
+
+Kubernetes Scheduler는 사용자 정의로 인해 가장 적합한 노드를 결정할 수도 있습니다.
+  * Node Selector: Pod .spec.nodeSelector 에 정의 된 Labels로 결정합니다.
+  * Node affinity, anti-affinity : nodeSelector 보다 노드 선택의 유연성을 가지고 있습니다. Node affinity에 일치하는 노드만 사용하거나 상황에 따른 우선순위가 높은 다른 노드를 선택할 수 있습니다.
+  * Taints, tolerations : 동작은 비슷하지만 노드에서 taint 조건(key, value, effect)을 가지고 있지 않은 Pod는 스케쥴에서 제외합니다.
