@@ -38,8 +38,8 @@ hard eviction thresholds 값에 도달하면 kubelet은 유예 기간없이 즉�
   * --eviction-hard : hard eviction threshold 값을 정의 할 수 있습니다. 
   
 ```yaml
---eviction-hard=memory.available<1Gi
 노드 memory.available가 1Gi 미만일 때 kubelet에 자원을 회수하도록 지시합니다.
+--eviction-hard=memory.available<1Gi
 ```
 
 #### soft eviction thresholds
@@ -47,8 +47,8 @@ hard eviction thresholds 값에 도달하면 kubelet은 유예 기간없이 즉�
   * --eviction-soft & --eviction-soft-grace-period : soft eviction threshold 값을 정의 할 수 있습니다. 
 
 ```yaml
---eviction-soft=memory.available<2Gi --eviction-soft-grace-period=1m30s 
 eviction threshold 값을 90초간 제거를 유예합니다. --eviction-max-pod-grace-periodin 으로 허용되는 최대 유예 기간을 지정할 수도 있습니다.
+--eviction-soft=memory.available<2Gi --eviction-soft-grace-period=1m30s 
 ```
 
 
@@ -99,12 +99,14 @@ kubelet이 회수하는 자원의 양이 적으면 시스템은 반복적으로 
 ## Out-of-Resource Handling
 만약 Node Memory만 고려하여 Memory 용량이 10Gi인 경우에 kernel, kubelet, Docker 등과 같은 시스템 데몬에 대해 총 메모리의 10 %를 예약하려고합니다. 또한 메모리 사용률의 95%에서 Pod를 제거하려고합니다.
 다음 조건을 반영하기 위해서는 kubelet에 플래그를 설정해야합니다.
-최소한 시스템 데몬이 실행되기 위한 Memory는 10%인 1Gi 이고 여기에 eviction threshold .5Gi를 더하여 system-reserved=memory=1.5Gi 을 설정합니다.
+
 ```yaml
 kubelet : 
   eviction-hard=memory.available<500Mi 
   system-reserved=memory=1.5Gi
 ```
+최소한 시스템 데몬이 실행되기 위한 Memory는 10%인 1Gi 이고 여기에 eviction threshold .5Gi를 더하여 system-reserved=memory=1.5Gi 을 설정합니다.
+
 
 ## Conclusion
 관리자는 eviction thresholds, eviction grace periods 을 설정하여 노드 안정성을 고려하여 조건을 결정할 수 있습니다. 
