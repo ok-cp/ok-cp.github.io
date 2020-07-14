@@ -15,7 +15,7 @@ Taints/Tolerations는 nodeAffinity와 동작은 유사하지만 3가지 용도�
 * Taint-based Evictions : 노드에 문제가 있는 경우, Pod를 제거합니다.
 
 ## Taint-based Evictions 
-Usecase 중에서 Taint-based Evictions에 대해 조금 더 알아보도록 하겠습니다.
+Usecase 중에서 Taint-based Evictions에 대해 알아보도록 하겠습니다.
 
 Kubernetes 1.12부터 TaintNodesByCondition이 Beta로 승격되었습니다. 기본적으로 true로 설정되므로 필요한 경우 --feature-gates 명령을 사용하여 비활성화해야합니다.
 TaintNodesByCondition 활성화 된 경우 노드 컨트롤러는 노드 상태에 따라 자동으로 Taints를 추가합니다. 
