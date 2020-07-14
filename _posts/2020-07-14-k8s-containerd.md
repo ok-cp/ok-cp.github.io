@@ -1,4 +1,4 @@
- ---
+---
 title: "Kubernetes Containerd"
 date: 2020-07-14 18:26:28 +0900
 categories: Container
@@ -65,5 +65,5 @@ containerd는 docker-18-ce 버전부터 포함되어있어 kubelet 실행시 con
 * Docker CE 에는 containerd 1.1 가 포함됩니다. 
 
 ### 참조
-https://kubernetes.io/blog/2018/05/24/kubernetes-containerd-integration-goes-ga/
-https://cloud.google.com/kubernetes-engine/docs/concepts/using-containerd?hl=ko
+* https://kubernetes.io/blog/2018/05/24/kubernetes-containerd-integration-goes-ga/
+* https://cloud.google.com/kubernetes-engine/docs/concepts/using-containerd?hl=ko
