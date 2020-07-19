@@ -35,19 +35,30 @@ port 31806은 nginx ingress controller port 입니다.
 
 예상했던 것과 다르게 Ingress/NodePort 모두 Pod IP를 바로 찾아가고 있습니다. 다만 Ingress는 Nginx Ingress Controller Pod 에 먼저 요청하고 있습니다.
 
-### Tunnel Interface
+## Tunnel Interface
 Calico cni를 사용하는 구성에서 Pod가 배치된 Node가 다른 NodeIP로 요청을 보낸경우 어떻게 트래픽이 전달되는지 확인해보았습니다.
 
+## NodePort
 #### worker1
-192.168.149.2 는 tunnel interface 입니다. Client IP -> Node IP -> tunnel -> Pod
+192.168.149.2 는 tunnel interface 입니다. Client IP -> Node IP -> tunnel -> pod
 ![nginx-ingress-4]({{ site.url }}{{ site.baseurl }}/assets/images/nginx-ingress-4.png)
 
 #### worker2
 tunnel -> Pod
 ![nginx-ingress-5]({{ site.url }}{{ site.baseurl }}/assets/images/nginx-ingress-5.png)
 
+
+## Ingress Controller
+#### worker1
+192.168.149.2 는 tunnel interface 입니다. Client IP -> Node IP -> tunnel -> Ingress pod
+![nginx-ingress-6]({{ site.url }}{{ site.baseurl }}/assets/images/nginx-ingress-6.png)
+
+#### worker2
+tunnel -> Ingress pod -> Pod
+![nginx-ingress-7]({{ site.url }}{{ site.baseurl }}/assets/images/nginx-ingress-7.png)
+
 ### 결론
-ingress/nodeport 상관없이 clusterip 바라보지 않고 바로 트래픽을 전송하고 있었다. 
+ingress/nodeport 상관없이 clusterip 바라보지 않고 바로 트래픽을 전송하고 있었습니다.
 
 ### 참조
 * https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html
