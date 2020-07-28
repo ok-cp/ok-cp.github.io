@@ -36,6 +36,7 @@ pause container의 ipc mode가 “shareable” 인것을 확인할 수 있습니
 
 
 그리고 Pod에 Puase외 Container의 IPC Mode를 확인해보면 contaner:<pause container id>로 공유된 것을 확인할 수 있습니다.
+
 ![pause_container003]({{ site.url }}{{ site.baseurl }}/assets/images/pause_container003.png)
 
 
