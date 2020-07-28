@@ -25,10 +25,10 @@ IPC Mode가  "shareable" 경우, "container:<donor-name-or-ID>" 다른 컨테이
 
 ```bash
 --ipc="MODE"  : Set the IPC mode for the container
-```
 
- * “shareable" : 	Own private IPC namespace, with a possibility to share it with other containers.
- * “container:<_name-or-ID_>"	: Join another (“shareable”) container’s IPC namespace.
+“shareable" Own private IPC namespace, with a possibility to share it with other containers.
+“container:<_name-or-ID_>"	: Join another (“shareable”) container’s IPC namespace.
+```
 
 
 pause container의 ipc mode가 “shareable” 인것을 확인할 수 있습니다.
@@ -41,10 +41,11 @@ pause container의 ipc mode가 “shareable” 인것을 확인할 수 있습니
 
 ### Network settings
 network=container:<name|id> 로 설정한 경우, 다른 Container의 network를 공유할 수 있습니다.
+```bash
 --network="none" : Connect a container to a network
                       'none': no networking
                       'container:<name|id>': reuse another container's network stack
-
+```
 Pause container(1473a0f09e24) Network Mode가 None이며 같은 Pod의 Container(e7ea6ce64c2c) Network는 Pause network 와 연결되어 있는 것을 볼 수 있습니다. 그리고 Pause container의 NetworkSettings는 docker network에 등록된 network id로 설정되어 있습니다.
 
 ![pause_container004]({{ site.url }}{{ site.baseurl }}/assets/images/pause_container004.png)                      
