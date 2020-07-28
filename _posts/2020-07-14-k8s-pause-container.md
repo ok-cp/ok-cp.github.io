@@ -49,5 +49,7 @@ Pause container(1473a0f09e24) Network Mode가 None이며 같은 Pod의 Container
 
 ![pause_container004]({{ site.url }}{{ site.baseurl }}/assets/images/pause_container004.png)                      
 
+재미있는 부분은 pause container의 docker network는 none 입니다. none으로 설정한 경우 container는 외부 네트워크를 할수 없습니다. docker network는 host 또는 bridge를 선택하여 외부 통신을 합니다. 하지만 Kubernetes에서는 cni를 통해서 container network를 관리합니다. 
+
 ### 결론
 이렇게 하면 Container간 namespaces 공유가 가능합니다. Pause 는 namespaces 공유 기능외에도 좀비 프로세스를 괸라합니다. 좀비 프로세스는 다음에 좀 더 알아보도록 하겠습니다.
