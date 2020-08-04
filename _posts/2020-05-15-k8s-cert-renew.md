@@ -4,7 +4,22 @@ date: 2020-05-15 08:26:28 +0900
 categories: Kubernetes
 classes: wide
 ---
-## kubernetes 인증서
+## kubernetes 인증서 종류
+* kubelet에서 API 서버 인증서를 인증시 사용하는 클라이언트 인증서
+* API 서버 엔드포인트를 위한 서버 인증서
+* API 서버에 클러스터 관리자 인증을 위한 클라이언트 인증서
+* API 서버에서 kubelet과 통신을 위한 클라이언트 인증서
+* API 서버에서 etcd 간의 통신을 위한 클라이언트 인증서
+* 컨트롤러 매니저와 API 서버 간의 통신을 위한 클라이언트 인증서/kubeconfig
+* 스케줄러와 API 서버간 통신을 위한 클라이언트 인증서/kubeconfig
+* front-proxy를 위한 클라이언트와 서버 인증서
+
+### 인증서를 저장하는 위치
+```bash
+[root@bskim-master ~]# ls /etc/kubernetes/pki/
+apiserver.crt              apiserver-etcd-client.key  apiserver-kubelet-client.crt  ca.crt  ca.srl  etcd                front-proxy-ca.key  front-proxy-client.crt  sa.key
+apiserver-etcd-client.crt  apiserver.key              apiserver-kubelet-client.key  ca.key  conf    front-proxy-ca.crt  front-proxy-ca.srl  front-proxy-client.key  sa.pub
+```
 ### v1.14.x 
 마스터 노드에서 실행합니다.
 
@@ -50,3 +65,6 @@ kubeadm alpha certs check-expiration
 
 #### 인증서 갱신
 kubeadm alpha certs renew all 
+
+### 참조
+https://kubernetes.io/ko/docs/setup/best-practices/certificates/

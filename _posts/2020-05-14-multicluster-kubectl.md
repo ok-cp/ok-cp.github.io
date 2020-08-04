@@ -4,19 +4,22 @@ date: 2020-05-14 08:26:28 +0900
 categories: Kubernetes
 classes: wide
 ---
-멀티 클러스터가 구성되어있는 경우, kubeconfig 설정을 통해서 kubectl이 멀티클러스터를 관리할 수 있도록 할 수 있다.
+멀티 클러스터가 구성되어있는 경우, kubeconfig 설정을 통해서 kubectl이 멀티클러스터를 관리할 수 있도록 할 수 있습니다.
 
-kubeconfig는 마스터 노드에 있다.
+kubeconfig는 마스터 노드에 있습니다.
+```bash
 master $ ls /root/.kube/config
 /root/.kube/config
+```
 
 ### 클러스터 추가는 다음과 같이 한다.
+```bash
 kubectl config set-cluster development --server=https://1.2.3.4 --certificate-authority=/etc/kubernetes/pki/ca.crt
 kubectl config set-credentials development --client-certificate=/etc/kubernetes/pki/users/dev-user/developer-user.crt --client-key=/etc/kubernetes/pki/users/test-user/test-user.key
 kubectl config set-context development --cluster=development --namespace=storage --user=dev-user
+```
 
-
-kubectl config view 명령어를 통해 config 를 조회할 수 있다.
+kubectl config view 명령어를 통해 config 를 조회할 수 있습니다.
 ```yaml
 apiVersion: v1
 clusters:
@@ -71,5 +74,7 @@ users:
     client-key: /etc/kubernetes/pki/users/test-user/test-user.key
 ```
 
-만약 test-cluster-1 클러스터를 사용하고 싶다면 다음과 같이 명령어를 입력한다.
+만약 test-cluster-1 클러스터를 사용하고 싶다면 다음과 같이 명령어를 입력한다. Namespace 변경도 동일하게 변경가능하다.
+```bash
 kubectl config --kubeconfig=/root/my-kube-config use-context research
+```
