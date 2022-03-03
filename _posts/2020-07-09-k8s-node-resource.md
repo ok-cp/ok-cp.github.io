@@ -7,6 +7,19 @@ tags:
   - Kubernetes
 
 ---
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5986950452818428"
+     crossorigin="anonymous"></script>
+<!-- 블로그광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5986950452818428"
+     data-ad-slot="7056820218"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 ## kubelet 
 Kubernetes의 주요 작업을 수행하는 노드 구성 요소입니다. 
 
@@ -111,3 +124,16 @@ kubelet :
 ## Conclusion
 관리자는 eviction thresholds, eviction grace periods 을 설정하여 노드 안정성을 고려하여 조건을 결정할 수 있습니다. 
 그러나 eviction thresholds을 너무 높게 설정하거나eviction grace periods을 너무 길게 설정할 때는 주의해야합니다.
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5986950452818428"
+     crossorigin="anonymous"></script>
+<!-- 블로그광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5986950452818428"
+     data-ad-slot="7056820218"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
