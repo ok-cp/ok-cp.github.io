@@ -8,6 +8,20 @@ tags:
   - Telecommuting
 
 ---
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5986950452818428"
+     crossorigin="anonymous"></script>
+<!-- 블로그광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5986950452818428"
+     data-ad-slot="7056820218"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 ## 자택근무
 올해초 코로나19 바이러스가 국내 급속도로 퍼지기 시작하면서 제가 다니는 회사는 2월 말부터 자택근무를 시작하게 되었습니다. 5월에 자택근무가 종료되었고 2주동안 다시 사무실 출근을 했지만 건물 다른층에서 확진자가 나오면서 다시 자택근무로 돌아가 현재 8월까지 자택근무를 하고 있습니다. 예기치 않게 올해 6개월정도 자택근무를 하게 되었고 다른 회사에 비해 자택근무를 길게 하고 있습니다. 자택근무 기간을 길게 갖는 이유는 업무특성상 외근직이 많아 조심성이 더 필요한것으로 판단됩니다. 자택근무를 하면서 느낀점을 얘기해보고자 합니다.
 
@@ -31,3 +45,17 @@ tags:
 
 ### 앞으로 자택근무
 한때 실리콘밸리 기업의 자택근무 문화를 보고 부러워할때가 있었지만 현재는 장기적인 자택근무에 대해 반대 생각을 가지고 있습니다. 앞서 말한것처럼 자택근무는 꼭 필요한 경우가 있고 회사마다 준비가 항상되어있어야 된다고 생각합니다. 하지만 장기적인 자택근무는 업무 생산성이 떨어질 수 밖에 없다고 생각합니다. 가장 큰 이유는 커뮤니케이션의 어려움으로 인해 커뮤니케이션의 횟수가 줄어 서로간 정보 공유가 줄어듭니다. 대면하며 대화할때 여러가지 질문과 대화가 오가고 쓸모없는 정보라도 공유가 되기 때문입니다. 앞으로 코로나 시국이 어떻게 진행될지는 모르겠지만 하루라도 빨리 일상으로 돌아가 회사 동료들과 커피 한잔할 수 있으면 하는 바램입니다.
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5986950452818428"
+     crossorigin="anonymous"></script>
+<!-- 블로그광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5986950452818428"
+     data-ad-slot="7056820218"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
